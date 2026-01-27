@@ -1,0 +1,9 @@
+# Auto-généré: 2026-01-27T13:10:44
+PRODUCT = {'produit': 'Pain de Mie Graines de Lin et Tournesol Bio LA BOULANGERE', 'marque': 'LA BOULANGERE', 'code_barre': '3760049798746', 'prix': '2,89 €', 'prix_num': 2.89, 'categorie': 'alimentaire_pain', 'magasin': 'Contact Longpre Les Corps Saints', 'url_magasin': 'https://www.carrefour.fr/magasin/contact-longpre-les-corps-saints', 'url_produit': 'https://www.carrefour.fr/p/pain-de-mie-graines-de-lin-et-tournesol-bio-la-boulangere-3760049798746'}
+
+def get_product():
+    return PRODUCT
+
+if __name__ == "__main__":
+    from pprint import pprint
+    pprint(PRODUCT)

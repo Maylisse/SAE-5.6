@@ -1,0 +1,9 @@
+# Auto-généré: 2026-01-27T13:10:32
+PRODUCT = {'produit': 'Riz Arborio Risotto CARREFOUR EXTRA', 'marque': 'CARREFOUR EXTRA', 'code_barre': '3560070425235', 'prix': '1,95 €', 'prix_num': 1.95, 'categorie': 'alimentaire_riz', 'magasin': 'Contact Longpre Les Corps Saints', 'url_magasin': 'https://www.carrefour.fr/magasin/contact-longpre-les-corps-saints', 'url_produit': 'https://www.carrefour.fr/p/riz-arborio-risotto-carrefour-extra-3560070425235'}
+
+def get_product():
+    return PRODUCT
+
+if __name__ == "__main__":
+    from pprint import pprint
+    pprint(PRODUCT)

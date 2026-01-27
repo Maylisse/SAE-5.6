@@ -1,0 +1,9 @@
+# Auto-généré: 2026-01-27T13:11:06
+PRODUCT = {'produit': 'Gateau 3D princesses LIGHTBODY', 'marque': 'LIGHTBODY', 'code_barre': '5030765036568', 'prix': '21,99 €', 'prix_num': 21.99, 'categorie': 'alimentaire_pain', 'magasin': 'Contact Longpre Les Corps Saints', 'url_magasin': 'https://www.carrefour.fr/magasin/contact-longpre-les-corps-saints', 'url_produit': 'https://www.carrefour.fr/p/gateau-3d-princesses-lightbody-5030765036568'}
+
+def get_product():
+    return PRODUCT
+
+if __name__ == "__main__":
+    from pprint import pprint
+    pprint(PRODUCT)

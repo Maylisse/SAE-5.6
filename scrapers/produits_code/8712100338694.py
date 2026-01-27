@@ -1,0 +1,9 @@
+# Auto-généré: 2026-01-27T13:10:30
+PRODUCT = {'produit': 'Fleur de Maïs Sans Gluten MAIZENA', 'marque': 'MAIZENA', 'code_barre': '8712100338694', 'prix': '1,55 €', 'prix_num': 1.55, 'categorie': 'alimentaire_farine', 'magasin': 'Contact Longpre Les Corps Saints', 'url_magasin': 'https://www.carrefour.fr/magasin/contact-longpre-les-corps-saints', 'url_produit': 'https://www.carrefour.fr/p/fleur-de-mais-sans-gluten-maizena-8712100338694'}
+
+def get_product():
+    return PRODUCT
+
+if __name__ == "__main__":
+    from pprint import pprint
+    pprint(PRODUCT)

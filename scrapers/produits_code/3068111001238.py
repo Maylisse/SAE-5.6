@@ -1,0 +1,9 @@
+# Auto-généré: 2026-01-27T13:10:31
+PRODUCT = {'produit': 'Farine De Blé Pour Gâteaux FRANCINE', 'marque': 'FRANCINE', 'code_barre': '3068111001238', 'prix': '1,79 €', 'prix_num': 1.79, 'categorie': 'alimentaire_farine', 'magasin': 'Contact Longpre Les Corps Saints', 'url_magasin': 'https://www.carrefour.fr/magasin/contact-longpre-les-corps-saints', 'url_produit': 'https://www.carrefour.fr/p/farine-de-ble-pour-gateaux-francine-3068111001238'}
+
+def get_product():
+    return PRODUCT
+
+if __name__ == "__main__":
+    from pprint import pprint
+    pprint(PRODUCT)

@@ -1,4 +1,4 @@
-from scrapers.carrefour import scrape_all, sauvegarder_dans_csv
+from scrapers.carrefour_pâtes import scrape_all, sauvegarder_dans_csv
 from database.mongoDB import sauvegarder_dans_mongodb
 
 def main():

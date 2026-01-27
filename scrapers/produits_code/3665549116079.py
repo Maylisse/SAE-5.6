@@ -1,0 +1,9 @@
+# Auto-généré: 2026-01-27T13:11:02
+PRODUCT = {'produit': 'Pâtes - Gamme Hve "penne" - Valfleuri VALFLEURI', 'marque': 'VALFLEURI', 'code_barre': '3665549116079', 'prix': '10,95 €', 'prix_num': 10.95, 'categorie': 'alimentaire_pates', 'magasin': 'Contact Longpre Les Corps Saints', 'url_magasin': 'https://www.carrefour.fr/magasin/contact-longpre-les-corps-saints', 'url_produit': 'https://www.carrefour.fr/p/pates-gamme-hve-penne-valfleuri-3665549116079?s=2122'}
+
+def get_product():
+    return PRODUCT
+
+if __name__ == "__main__":
+    from pprint import pprint
+    pprint(PRODUCT)
