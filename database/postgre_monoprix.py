@@ -1,3 +1,11 @@
+# import_monoprix_csv_to_postgres.py
+# Import du dernier CSV Monoprix (scrapers/monoprix_premiere_necessite_*.csv) dans PostgreSQL
+# ✅ même logique que ton import Carrefour
+# ✅ sans ON CONFLICT
+#
+# Dépendances:
+# pip install pandas psycopg2
+
 import os
 import glob
 import pandas as pd
@@ -13,10 +21,10 @@ PG_PASS = "2005"
 def find_latest_csv():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     project_dir = os.path.abspath(os.path.join(base_dir, ".."))
-    pattern = os.path.join(project_dir, "scrapers", "carrefour_premiere_necessite_*.csv")
+    pattern = os.path.join(project_dir, "scrapers", "monoprix_premiere_necessite_*.csv")
     files = sorted(glob.glob(pattern))
     if not files:
-        raise FileNotFoundError("Aucun CSV trouvé dans scrapers/")
+        raise FileNotFoundError("Aucun CSV Monoprix trouvé dans scrapers/ (monoprix_premiere_necessite_*.csv)")
     return files[-1]
 
 
@@ -77,7 +85,7 @@ def get_or_create_produit(cur, nom_produit: str, marque: str, code_barre: str, i
         )
         return cur.fetchone()[0]
 
-    # sinon fallback: nom + marque + categorie
+    # sinon fallback: nom + marque + categorie (code_barres NULL)
     cur.execute(
         """
         SELECT id_produit
@@ -104,7 +112,7 @@ def get_or_create_produit(cur, nom_produit: str, marque: str, code_barre: str, i
     return cur.fetchone()[0]
 
 
-def insert_observation(cur, id_produit: int, id_magasin: int, prix: float, source: str = "carrefour_scrape"):
+def insert_observation(cur, id_produit: int, id_magasin: int, prix: float, source: str):
     cur.execute(
         """
         INSERT INTO observation_prix (id_produit, id_magasin, prix, source)
@@ -114,10 +122,12 @@ def insert_observation(cur, id_produit: int, id_magasin: int, prix: float, sourc
     )
 
 
-def import_csv(conn, csv_path):
+def import_csv(conn, csv_path: str):
     df = pd.read_csv(csv_path)
 
-    df["prix_num"] = pd.to_numeric(df["prix_num"], errors="coerce")
+    # Monoprix CSV attendu (depuis ton scraper):
+    # produit, categorie, prix, prix_num, url_produit, magasin, url_magasin (+ éventuellement source/scraped_at)
+    df["prix_num"] = pd.to_numeric(df.get("prix_num"), errors="coerce")
     df = df.dropna(subset=["produit", "categorie", "magasin", "url_magasin", "prix_num"])
 
     with conn.cursor() as cur:
@@ -127,18 +137,17 @@ def import_csv(conn, csv_path):
             magasin = str(r["magasin"]).strip()
             url_magasin = str(r["url_magasin"]).strip()
 
-            marque = None if pd.isna(r.get("marque")) else str(r.get("marque")).strip()
-            code_barre = None if pd.isna(r.get("code_barre")) else str(r.get("code_barre")).strip()
-            if code_barre == "":
-                code_barre = None
+            # Monoprix n'a pas marque/code_barre dans ton CSV -> on met None
+            marque = None
+            code_barre = None
 
             prix = float(r["prix_num"])
 
             id_cat = get_or_create_categorie(cur, categorie)
-            id_mag = get_or_create_magasin(cur, magasin, "Carrefour", url_magasin)
+            id_mag = get_or_create_magasin(cur, magasin, "Monoprix", url_magasin)
             id_prod = get_or_create_produit(cur, produit, marque, code_barre, id_cat)
 
-            insert_observation(cur, id_prod, id_mag, prix)
+            insert_observation(cur, id_prod, id_mag, prix, source="monoprix_scrape")
 
     conn.commit()
 
@@ -151,7 +160,7 @@ def main():
         print("✅ Connexion PostgreSQL OK")
         import_csv(conn, csv_path)
 
-    print("✅ Import terminé avec succès")
+    print("✅ Import Monoprix terminé avec succès")
 
 
 if __name__ == "__main__":
